@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -24,4 +25,12 @@ public interface StudentRepository {
 
   @Select("SELECT * FROM student")
   List<Student> displayStudent();
+
+  @Update("UPDATE student SET age=#{age}, place_of_birth=#{placeOfBirth} WHERE name = #{name}")
+  void updateStudent2(
+      @Param("name") String name,
+      @Param("age") int age,
+      @Param("placeOfBirth") String placeOfBirth
+  );
+
 }

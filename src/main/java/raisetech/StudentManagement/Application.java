@@ -50,7 +50,11 @@ public class Application {
 			sb.append(student.getName())
 					.append(" ")
 					.append(student.getAge())
-					.append("歳\n"); // 空行で区切る
+					.append("歳")
+					.append(" ")
+					.append(student.getPlaceOfBirth())
+					.append("出身\n"); // 空行で区切る「\n」
+
 		}
 
 		return sb.toString();
@@ -80,5 +84,13 @@ public class Application {
 	public void deleteStudent(String name){
 		repository.deleteStudent(name);
 	}
+
+	@PatchMapping("/student2")
+	public void updateStudent2(@RequestParam String name, @RequestParam int age, @RequestParam String placeOfBirth){
+		repository.updateStudent2(name, age, placeOfBirth);
+	}
+	//★補足
+	//講座内では@RequestPramや@Paramはついていないが、順番が合ってるのマッピングできて
+	//いるだけ。そのため、念の為に模範解答には追記している。
 
 }

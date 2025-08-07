@@ -4,6 +4,7 @@ public class Student {
 
   private String name;
   private int age;
+  private String placeOfBirth;
 
 
   public String getName() {
@@ -21,4 +22,13 @@ public class Student {
   public void setAge(int age) {
     this.age = age;
   }
+
+  public String getPlaceOfBirth() {
+    return placeOfBirth;
+  }
+
+  public void setPlaceOfBirth(String placeOfBirth) {
+    this.placeOfBirth = placeOfBirth;
+  }
+
 }
