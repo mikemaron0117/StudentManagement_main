@@ -1,15 +1,10 @@
 package raisetech.StudentManagement;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
@@ -28,20 +23,19 @@ public class Application {
 	}
 
 	@GetMapping("/student")
-	public String getStudent(@RequestParam String name){
-		Student student = repository.searchByName(name);
-		return student.getName() + " " + student.getAge() + "歳";
+	public List<Student> getStudentList(){
+		return repository.search();
 
 /*		Student student = new Student();
 		student.setName("EnamiKouji");
 		String name = student.getName();*/
 	}
 
-	@GetMapping("/studentInfo")
-/*	public List<Student> displayStudent(){
+/*	@GetMapping("/studentInfo")
+*//*	public List<Student> displayStudent(){
 		List<Student> studentList = repository.displayStudent();
 		return studentList;
-	}*/
+	}*//*
 	public String displayStudent() {
 		List<Student> studentList = repository.displayStudent();
 
@@ -58,7 +52,7 @@ public class Application {
 		}
 
 		return sb.toString();
-	}
+	}*/
 
 /*	@GetMapping("/studentInfo")
 	public String getName() {
@@ -70,7 +64,7 @@ public class Application {
 		return age;
 	}*/
 
-	@PostMapping("/student")
+/*	@PostMapping("/student")
 	public void registerStudent(String name, int age) {
 		repository.registerStudent(name, age);
 	}
@@ -88,7 +82,7 @@ public class Application {
 	@PatchMapping("/student2")
 	public void updateStudent2(@RequestParam String name, @RequestParam int age, @RequestParam String placeOfBirth){
 		repository.updateStudent2(name, age, placeOfBirth);
-	}
+	}*/
 	//★補足
 	//講座内では@RequestPramや@Paramはついていないが、順番が合ってるのマッピングできて
 	//いるだけ。そのため、念の為に模範解答には追記している。
