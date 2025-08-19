@@ -31,6 +31,11 @@ public class Application {
 		String name = student.getName();*/
 	}
 
+	@GetMapping("/studentsCoeses")
+	public List<StudentsCourses> getStudentsCoursesList() {
+		return repository.searchCourse();
+	}
+
 /*	@GetMapping("/studentInfo")
 *//*	public List<Student> displayStudent(){
 		List<Student> studentList = repository.displayStudent();
