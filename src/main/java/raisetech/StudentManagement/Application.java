@@ -6,13 +6,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.repository.StudentRepository;
 
 @SpringBootApplication
-@RestController
+/*@RestController*/
 public class Application {
 
-	@Autowired
-	private StudentRepository repository;
+/*	@Autowired
+	private StudentRepository repository;*/
 
 /*	private String name = "Enami Kouji";
 	private int age = 37;*/
@@ -22,19 +25,19 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@GetMapping("/student")
+/*	@GetMapping("/student")
 	public List<Student> getStudentList(){
 		return repository.search();
 
-/*		Student student = new Student();
+*//*		Student student = new Student();
 		student.setName("EnamiKouji");
-		String name = student.getName();*/
+		String name = student.getName();*//*
 	}
 
-	@GetMapping("/studentsCoeses")
-	public List<StudentsCourses> getStudentsCoursesList() {
-		return repository.searchCourse();
-	}
+	@GetMapping("/studentsCoeseList")
+	public List<StudentsCourses> getStudentsCourseList() {
+		return repository.searchstudentsCourse();
+	}*/
 
 /*	@GetMapping("/studentInfo")
 *//*	public List<Student> displayStudent(){
