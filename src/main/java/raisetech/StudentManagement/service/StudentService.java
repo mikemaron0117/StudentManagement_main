@@ -18,20 +18,32 @@ public class StudentService {
   }
 
   public List<Student> searchStudentList() {
-    //検索処理
     repository.search();
 
+    /*//検索処理
+    List<Student> allStudentList = repository.search();
     //絞り込みをする。年齢が３０代の人のみを抽出する。
+    List<Student> thirtiesList = allStudentList.stream()
+        .filter(v -> v.getAge() >=30 && v.getAge() < 40)
+        .toList();
     //抽出したリストをcontrollerに返す。
-
-
+    return thirtiesList;*/
 
     return repository.search();
   }
 
   public List<StudentsCourses> searchStudentsCourseList() {
+
+    repository.searchStudentsCourse();
+
+    /*List<StudentsCourses> allStudentCourses = repository.searchStudentsCourse();
+
     //絞り込み検索で「Javaコース」のコース情報のみを抽出する。
+    List<StudentsCourses> javaCorseList = allStudentCourses.stream()
+        .filter(v -> v.getCourseName().contains("Java"))
+        .toList();
     //抽出したリストをcontrollerに返す。
+    return javaCorseList;*/
 
     return repository.searchStudentsCourse();
   }
