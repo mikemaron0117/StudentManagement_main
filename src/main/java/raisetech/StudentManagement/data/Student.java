@@ -16,6 +16,9 @@ public class Student {
   private String area;
   private int age;
   private String sex;
+  private String remark; //備考欄
+  private boolean isDeleted; //削除フラグ
+  // 論理削除（対義語：物理削除）→表では削除されているが、データ上は残っている状態（分析用に残しておくため）
 
 
   /*private String placeOfBirth;*/
