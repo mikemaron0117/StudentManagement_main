@@ -19,6 +19,7 @@ public class StudentService {
 
   public List<Student> searchStudentList() {
     repository.search();
+    return repository.search();
 
     /*//検索処理
     List<Student> allStudentList = repository.search();
@@ -29,12 +30,12 @@ public class StudentService {
     //抽出したリストをcontrollerに返す。
     return thirtiesList;*/
 
-    return repository.search();
   }
 
   public List<StudentsCourses> searchStudentsCourseList() {
 
     repository.searchStudentsCourse();
+    return repository.searchStudentsCourse();
 
     /*List<StudentsCourses> allStudentCourses = repository.searchStudentsCourse();
 
@@ -45,7 +46,6 @@ public class StudentService {
     //抽出したリストをcontrollerに返す。
     return javaCorseList;*/
 
-    return repository.searchStudentsCourse();
   }
 
 }
