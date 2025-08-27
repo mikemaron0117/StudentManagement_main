@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
@@ -42,5 +45,25 @@ public class StudentController {
   public List<StudentsCourses> getStudentsCourseList() {
     return service.searchStudentsCourseList();
   }
+
+  @GetMapping("/newStudent")
+  public String neeStudent(Model model){
+    model.addAttribute("studentDetail", new StudentDetail());
+    return "registerStudent";
+  }
+
+  @PostMapping("/registerStudent")
+  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result){
+    if(result.hasErrors()){
+      return "registerStudent";
+    }
+    //System.out.println(studentDetail.getStudent().getName() + "さんが新規受講生として登録されました。");
+    //　新規受講生情報を登録する処理を実装する。
+    //　コース情報も一緒に登録できるように実装する。コースは単体で良い。
+    return "redirect:/studentList";
+
+  }
+
+
 
 }
