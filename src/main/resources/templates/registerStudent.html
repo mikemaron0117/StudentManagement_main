@@ -12,9 +12,66 @@
 <form th:action="@{/registerStudent}" th:object="${studentDetail}" method="post">
 
   <div>
+    <label for="id">ID:</label>
+    <input type="text" id="id" th:field="*{student.id}" required />
+  </div>
+  <div>
     <label for="name">名前:</label>
     <input type="text" id="name" th:field="*{student.name}" required />
   </div>
+  <div>
+    <label for="kanaName">フリガナ:</label>
+    <input type="text" id="kanaName" th:field="*{student.kanaName}" required />
+  </div>
+  <div>
+    <label for="nickname">ニックネーム:</label>
+    <input type="text" id="nickname" th:field="*{student.nickname}" required />
+  </div>
+  <div>
+    <label for="email">メールアドレス:</label>
+    <input type="text" id="email" th:field="*{student.email}" required />
+  </div>
+  <div>
+    <label for="area">地域:</label>
+    <input type="text" id="area" th:field="*{student.area}" required />
+  </div>
+  <div>
+    <label for="sex">性別:</label>
+    <input type="text" id="sex" th:field="*{student.sex}" required />
+  </div>
+  <div>
+    <label for="remark">備考:</label>
+    <input type="text" id="remark" th:field="*{student.remark}" required />
+  </div>
+
+  <div>
+    <button type="submit">登録</button>
+  </div>
+</form>
+
+  <form th:action="@{/registerStudentCourse}" th:object="${studentCourseDetail}" method="post">
+
+    <div>
+      <label for="id">ID:</label>
+      <input type="text" id="id" th:field="*{studentsCourses.id}" required />
+    </div>
+    <div>
+      <label for="courseName">コース名:</label>
+      <input type="text" id="courseName" th:field="*{studentsCourses.courseName}" required />
+    </div>
+    <div>
+      <label for="courseStartAt">受講開始日:</label>
+      <input type="text" id="courseStartAt" th:field="*{studentsCourses.courseStartAt}" required />
+    </div>
+    <div>
+      <label for="courseEndAt">受講修了日:</label>
+      <input type="text" id="courseEndAt" th:field="*{studentsCourses.courseEndAt}" required />
+    </div>
+    <div>
+      <label for="studentsId">受講生ID:</label>
+      <input type="text" id="studentsId" th:field="*{studentsCourses.studentsId}" required />
+    </div>
+
 
   <div>
     <button type="submit">登録</button>

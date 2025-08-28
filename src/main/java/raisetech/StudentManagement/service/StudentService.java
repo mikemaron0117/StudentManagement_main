@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
 @Service //スプリングが認識してくれるようになる
@@ -46,6 +47,16 @@ public class StudentService {
     //抽出したリストをcontrollerに返す。
     return javaCorseList;*/
 
+  }
+
+  @Autowired
+  public void registerStudentInfo(Student student){
+    repository.registerStudent(student);
+  }
+
+  @Autowired
+  public void registerStudentCourseInfo(StudentsCourses studentsCourses){
+    repository.registerStudentCourse(studentsCourses);
   }
 
 }
