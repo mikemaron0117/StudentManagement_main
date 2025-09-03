@@ -3,6 +3,7 @@ package raisetech.StudentManagement.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourses;
 import raisetech.StudentManagement.domain.StudentDetail;
@@ -49,14 +50,15 @@ public class StudentService {
 
   }
 
-  @Autowired
-  public void registerStudentInfo(Student student){
-    repository.registerStudent(student);
+  @Transactional
+  public void registerStudent(StudentDetail studentDetail){
+    repository.registerStudent(studentDetail.getStudent());
+    //　TODO:コース情報登録も行う。
   }
 
-  @Autowired
+/*  @Autowired
   public void registerStudentCourseInfo(StudentsCourses studentsCourses){
     repository.registerStudentCourse(studentsCourses);
-  }
+  }*/
 
 }

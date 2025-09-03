@@ -2,16 +2,13 @@ package raisetech.StudentManagement.controller;
 
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourses;
@@ -31,6 +28,12 @@ public class StudentController {
     this.converter = converter;
   }
 
+  //メニュー
+  @GetMapping("/menu")
+  public String menu(){
+    return "menu";
+  }
+
   @GetMapping("/studentList")
   public String getStudentList(Model model){
     List<Student> students = service.searchStudentList();
@@ -47,22 +50,22 @@ public class StudentController {
   }
 
   @GetMapping("/newStudent")
-  public String neeStudent(Model model){
+  public String newStudent(Model model){
     model.addAttribute("studentDetail", new StudentDetail());
     return "registerStudent";
   }
 
   @PostMapping("/registerStudent")
-  public String registerStudent(@ModelAttribute StudentDetail studentDetail, @ModelAttribute StudentsCourseDetail studentsCourseDetail ,BindingResult result){
+  public String registerStudent(@ModelAttribute StudentDetail studentDetail,BindingResult result){
     if(result.hasErrors()){
       return "registerStudent";
     }
     //System.out.println(studentDetail.getStudent().getName() + "さんが新規受講生として登録されました。");
-    //　新規受講生情報を登録する処理を実装する。
-    service.registerStudentInfo(studentDetail.getStudent());
+    //　①新規受講生情報を登録する処理を実装する。
+    service.registerStudent(studentDetail);
 
-    //　コース情報も一緒に登録できるように実装する。コースは単体で良い。
-    service.registerStudentCourseInfo(studentsCourseDetail.getStudentCourse());
+    //　②コース情報も一緒に登録できるように実装する。コースは単体で良い。
+    //service.registerStudentCourseInfo(studentsCourseDetail.getStudentCourse());
 
 
     //リダイレクト

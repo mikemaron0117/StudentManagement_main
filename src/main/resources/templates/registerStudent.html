@@ -1,25 +1,28 @@
 <!DOCTYPE html>
-<html xmlns:th="http//www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
   <title>受講生登録</title>
+  <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 
 <body>
 <h1>受講生登録</h1>
+<nav class="breadcrumb">
+  <ol>
+    <a href="menu">＞メニュー</a>
+  </ol>
+</nav>
 
 <form th:action="@{/registerStudent}" th:object="${studentDetail}" method="post">
 
-  <div>
-    <label for="id">ID:</label>
-    <input type="text" id="id" th:field="*{student.id}" required />
-  </div>
+
   <div>
     <label for="name">名前:</label>
     <input type="text" id="name" th:field="*{student.name}" required />
   </div>
-  <div>
+ <div>
     <label for="kanaName">フリガナ:</label>
     <input type="text" id="kanaName" th:field="*{student.kanaName}" required />
   </div>
@@ -35,21 +38,29 @@
     <label for="area">地域:</label>
     <input type="text" id="area" th:field="*{student.area}" required />
   </div>
+  <label for="age">年齢:</label>
+  <input type="text" id="age" th:field="*{student.age}"/>
+  </div>
+
+<!--  <div class="radio">
+    <label>性別:</label>
+    <span><input type="radio" name="gender" value="男性"/>男性</span>
+    <span><input type="radio" name="gender" value="女性"/>女性</span>
+    <span><input type="radio" name="gender" value="その他"/>その他</span>
+  </div>-->
   <div>
     <label for="sex">性別:</label>
-    <input type="text" id="sex" th:field="*{student.sex}" required />
+    <input type="text" id="sex" th:field="*{student.sex}"/>
   </div>
+
+
   <div>
     <label for="remark">備考:</label>
-    <input type="text" id="remark" th:field="*{student.remark}" required />
+    <textarea id="remark" rows="4" cols="40" th:field="*{student.remark}"></textarea>
   </div>
 
-  <div>
-    <button type="submit">登録</button>
-  </div>
-</form>
 
-  <form th:action="@{/registerStudentCourse}" th:object="${studentCourseDetail}" method="post">
+<!--<h1>コース登録</h1>
 
     <div>
       <label for="id">ID:</label>
@@ -61,16 +72,16 @@
     </div>
     <div>
       <label for="courseStartAt">受講開始日:</label>
-      <input type="text" id="courseStartAt" th:field="*{studentsCourses.courseStartAt}" required />
+      <input type="date" id="courseStartAt" th:field="*{studentsCourses.courseStartAt}" required />
     </div>
     <div>
       <label for="courseEndAt">受講修了日:</label>
-      <input type="text" id="courseEndAt" th:field="*{studentsCourses.courseEndAt}" required />
+      <input type="date" id="courseEndAt" th:field="*{studentsCourses.courseEndAt}" required />
     </div>
     <div>
       <label for="studentsId">受講生ID:</label>
       <input type="text" id="studentsId" th:field="*{studentsCourses.studentsId}" required />
-    </div>
+    </div>-->
 
 
   <div>
