@@ -59,29 +59,12 @@
     <textarea id="remark" rows="4" cols="40" th:field="*{student.remark}"></textarea>
   </div>
 
+<!--コース登録-->
 
-<!--<h1>コース登録</h1>
-
-    <div>
-      <label for="id">ID:</label>
-      <input type="text" id="id" th:field="*{studentsCourses.id}" required />
+    <div th:each="course, stat : *{studentsCourses}">
+      <label for="courseName" th:for="studentCourse.__${stat.index}__.courseName">受講コース名:</label>
+      <input type="text" id="courseName" th:id="studentCourse.__${stat.index}__.courseName" th:field="*{studentsCourses[__${stat.index}__].courseName}"/>
     </div>
-    <div>
-      <label for="courseName">コース名:</label>
-      <input type="text" id="courseName" th:field="*{studentsCourses.courseName}" required />
-    </div>
-    <div>
-      <label for="courseStartAt">受講開始日:</label>
-      <input type="date" id="courseStartAt" th:field="*{studentsCourses.courseStartAt}" required />
-    </div>
-    <div>
-      <label for="courseEndAt">受講修了日:</label>
-      <input type="date" id="courseEndAt" th:field="*{studentsCourses.courseEndAt}" required />
-    </div>
-    <div>
-      <label for="studentsId">受講生ID:</label>
-      <input type="text" id="studentsId" th:field="*{studentsCourses.studentsId}" required />
-    </div>-->
 
 
   <div>

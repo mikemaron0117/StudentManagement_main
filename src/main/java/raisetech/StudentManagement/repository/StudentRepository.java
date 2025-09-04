@@ -1,7 +1,6 @@
 package raisetech.StudentManagement.repository;
 
 import java.util.List;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -31,6 +30,11 @@ public interface StudentRepository {
    + "values(#{name}, #{kanaName}, #{nickname}, #{email}, #{area}, #{age}, #{sex}, #{remark}, false)")
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void registerStudent(Student student);
+
+  @Insert("INSERT INTO students_courses(course_name, course_start_at, course_end_at)"
+      +"values(#{courseName}, #{courseStartAt}, #{courseEndAt})")
+  @Options(useGeneratedKeys = true, keyProperty = "id")
+  void registerStudentsCourses(StudentsCourses studentsCourses);
 
 /*  @Insert("INSERT students_courses values(#{id}, #{courseName}, #{courseStartAt},#{courseEndAt}, #{studentsId}")
   void registerStudentCourse(StudentsCourses studentsCourses);*/
