@@ -51,6 +51,8 @@ public class StudentService {
 
   }
 
+  //登録処理
+
   @Transactional
   public void registerStudent(StudentDetail studentDetail){
     repository.registerStudent(studentDetail.getStudent());
@@ -63,6 +65,30 @@ public class StudentService {
     }
 
   }
+
+  //更新処理
+
+  public StudentDetail searchByID(int id) {
+    Student student = repository.searchById(id);
+    // studentCourses も別で取得して StudentDetail にまとめる
+    List<StudentsCourses> StudentsCourses = repository.searchByStudentId(id);
+
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudent(student);
+    studentDetail.setStudentsCourses(StudentsCourses);
+
+    return studentDetail;
+  }
+
+  @Transactional
+  public void updateStudent(StudentDetail studentDetail){
+    repository.updateStudent(studentDetail.getStudent());
+
+    for (StudentsCourses studentsCourses : studentDetail.getStudentsCourses()){
+      repository.updateStudentCourses(studentsCourses);
+    }
+  }
+
 
 /*  @Autowired
   public void registerStudentCourseInfo(StudentsCourses studentsCourses){

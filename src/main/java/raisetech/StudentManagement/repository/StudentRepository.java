@@ -5,8 +5,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourses;
+import raisetech.StudentManagement.domain.StudentDetail;
 
 /**
  * 受講生を扱うリポジトリ
@@ -35,6 +37,18 @@ public interface StudentRepository {
       +"values(#{courseName}, #{courseStartAt}, #{courseEndAt}, #{studentsId})")
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void registerStudentsCourses(StudentsCourses studentsCourses);
+
+  @Select("SELECT id, name, kana_Name, nickname, email, area, age, sex, remark FROM students WHERE id = #{id}")
+  Student searchById(int id);
+
+  @Select("SELECT id, course_name, course_start_at, course_start_at, course_end_at FROM students_courses WHERE students_id = #{studentsId}")
+  List<StudentsCourses> searchByStudentId(int studentsId);
+
+  @Update("UPDATE students SET name = #{name}, kana_Name = #{kanaName}, nickname = #{nickname}, email = #{email}, area = #{area}, age = #{age}, sex = #{sex}, remark = #{remark} WHERE id = #{id}")
+  void updateStudent(Student student);
+
+  @Update("UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}")
+  void updateStudentCourses(StudentsCourses studentsCourses);
 
 /*  @Insert("INSERT students_courses values(#{id}, #{courseName}, #{courseStartAt},#{courseEndAt}, #{studentsId}")
   void registerStudentCourse(StudentsCourses studentsCourses);*/

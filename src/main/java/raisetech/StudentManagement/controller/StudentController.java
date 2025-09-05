@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
@@ -34,6 +35,12 @@ public class StudentController {
   public String menu(){
     return "menu";
   }
+
+/*  //受講生一覧に戻る
+  @GetMapping("/studentList")
+  public String studentList(){
+    return "studentList";
+  }*/
 
   @GetMapping("/studentList")
   public String getStudentList(Model model){
@@ -68,8 +75,25 @@ public class StudentController {
     service.registerStudent(studentDetail);
 
     //　②コース情報も一緒に登録できるように実装する。コースは単体で良い。
-    //service.registerStudentCourseInfo(studentsCourseDetail.getStudentCourse());
 
+    //リダイレクト
+    return "redirect:/studentList";
+
+  }
+
+  @GetMapping("/updateStudent/{id}")
+  public String showUpdateForm(@PathVariable("id") int id, Model model){
+    StudentDetail studentDetail = service.searchByID(id);
+    model.addAttribute("studentDetail", studentDetail);
+    return "updateStudent";
+  }
+
+  @PostMapping("/updateStudent")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail,BindingResult result){
+    if(result.hasErrors()){
+      return "updateStudent";
+    }
+    service.updateStudent(studentDetail);
 
     //リダイレクト
     return "redirect:/studentList";
