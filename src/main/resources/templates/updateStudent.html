@@ -3,12 +3,12 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>受講生更新</title>
+  <title>受講生詳細</title>
   <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 
 <body>
-<h1>受講生更新</h1>
+<h1>受講生詳細</h1>
 <nav class="breadcrumb">
   <ol>
     <a href="/studentList">＞受講生一覧に戻る</a>
@@ -59,9 +59,19 @@
     <textarea id="remark" rows="4" cols="40" th:field="*{student.remark}"></textarea>
   </div>
 
+　<!-- 削除処理-->
+  <div class="checkbox">
+    <label>キャンセル:</label>
+    <span><input type="checkbox" name="isDeleted" value="true"/>キャンセル</span>
+  </div>
+
+
   <!--コース登録-->
 
  <div th:each="course, stat : *{studentsCourses}">
+   <input type="hidden" th:field="*{studentsCourses[__${stat.index}__].id}"/>
+<!--   <label for="id" th:for="studentCourse.__${stat.index}__.id">受講コースID:</label>
+   <input type="text" id="id" th:id="studentCourse.__${stat.index}__.id" th:field="*{studentsCourses[__${stat.index}__].id}"/>-->
     <label for="courseName" th:for="studentCourse.__${stat.index}__.courseName">受講コース名:</label>
     <input type="text" id="courseName" th:id="studentCourse.__${stat.index}__.courseName" th:field="*{studentsCourses[__${stat.index}__].courseName}"/>
   </div>

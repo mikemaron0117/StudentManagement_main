@@ -68,10 +68,10 @@ public class StudentService {
 
   //更新処理
 
-  public StudentDetail searchByID(int id) {
+  public StudentDetail searchByID(String id) {
     Student student = repository.searchById(id);
     // studentCourses も別で取得して StudentDetail にまとめる
-    List<StudentsCourses> StudentsCourses = repository.searchByStudentId(id);
+    List<StudentsCourses> StudentsCourses = repository.searchByStudentId(student.getId());
 
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);

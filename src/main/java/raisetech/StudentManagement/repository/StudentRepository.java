@@ -38,17 +38,23 @@ public interface StudentRepository {
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void registerStudentsCourses(StudentsCourses studentsCourses);
 
-  @Select("SELECT id, name, kana_Name, nickname, email, area, age, sex, remark FROM students WHERE id = #{id}")
-  Student searchById(int id);
+  @Select("SELECT * FROM students WHERE id = #{id}")
+  Student searchById(String id);
 
-  @Select("SELECT id, course_name, course_start_at, course_start_at, course_end_at FROM students_courses WHERE students_id = #{studentsId}")
-  List<StudentsCourses> searchByStudentId(int studentsId);
+  @Select("SELECT * FROM students_courses WHERE students_id = #{studentsId}")
+  List<StudentsCourses> searchByStudentId(String studentsId);
 
-  @Update("UPDATE students SET name = #{name}, kana_Name = #{kanaName}, nickname = #{nickname}, email = #{email}, area = #{area}, age = #{age}, sex = #{sex}, remark = #{remark} WHERE id = #{id}")
+/*  @Select("SELECT id, course_name, course_start_at, course_start_at, course_end_at FROM students_courses WHERE students_id = #{studentsId}")
+  List<StudentsCourses> searchByStudentId(String studentsId);*/
+
+  @Update("UPDATE students SET name = #{name}, kana_Name = #{kanaName}, nickname = #{nickname}, "
+      + "email = #{email}, area = #{area}, age = #{age}, sex = #{sex}, remark = #{remark}, isDeleted = #{isDeleted} WHERE id = #{id}")
   void updateStudent(Student student);
 
   @Update("UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}")
   void updateStudentCourses(StudentsCourses studentsCourses);
+
+
 
 /*  @Insert("INSERT students_courses values(#{id}, #{courseName}, #{courseStartAt},#{courseEndAt}, #{studentsId}")
   void registerStudentCourse(StudentsCourses studentsCourses);*/

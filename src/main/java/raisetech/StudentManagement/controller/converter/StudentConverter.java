@@ -16,8 +16,11 @@ public class StudentConverter {
       List<StudentsCourses> studentsCourses) {
     List<StudentDetail> studentDetails = new ArrayList<>();
     students.forEach(student -> {
-      StudentDetail studentDetail = new StudentDetail();
-      studentDetail.setStudent(student);
+      //isDeletedがfalseの時リストに追加
+      if(!student.isDeleted()){
+        StudentDetail studentDetail = new StudentDetail();
+              studentDetail.setStudent(student);
+
 
       List<StudentsCourses> convertStudentCourses = studentsCourses.stream()
           .filter(studentCourses -> student.getId().equals(studentCourses.getStudentsId()))
@@ -25,6 +28,7 @@ public class StudentConverter {
 
       studentDetail.setStudentsCourses(convertStudentCourses);
       studentDetails.add(studentDetail);
+      }
     });
     return studentDetails;
   }
