@@ -17,7 +17,7 @@ public class StudentConverter {
     List<StudentDetail> studentDetails = new ArrayList<>();
     students.forEach(student -> {
       //isDeletedがfalseの時リストに追加
-      if(!student.isDeleted()){
+
         StudentDetail studentDetail = new StudentDetail();
               studentDetail.setStudent(student);
 
@@ -28,7 +28,7 @@ public class StudentConverter {
 
       studentDetail.setStudentsCourses(convertStudentCourses);
       studentDetails.add(studentDetail);
-      }
+
     });
     return studentDetails;
   }
