@@ -1,4 +1,4 @@
-package raisetech.StudentManagement.data.taimenkadai01;
+package raisetech.StudentManagement.data.taimen01;
 
 public class Course {
   private String name;

@@ -1,0 +1,129 @@
+-------------------------------------------------------------------------------
+■課題１
+以下のコードは、課題で実装を行った受講生の情報を編集・更新する画面を開くための
+Controllerの一部です。
+
+@GetMapping("/students/{id}")
+public String getStudent(@PathVariable Long id, Model model){
+    Student student = studentService.getStudentById(id);
+    model.addAttribute("student", student);
+return "studentForm";
+}
+
+上記のソースを基準に以下３つの改変を行い、更新画面にアクセスしたとき正常に動作す
+るかどうか、またエラーになる場合はその原因を確認しましょう。
+1.@GetMapping("/students/{id}")の{id}の部分のみを削除しましょう。
+2.メソッドの引数@PathVariable Long id の指定を削除しましょう。
+3.@GetMapping("/students/{id}")の{id}を{hoge}に変更しましょう。
+
+-------------------------------------------------------------------------------
+＜回答＞
+1.studentList.htmlの「th:href="@{/student/{id}(id=${studentDetail.student.id})}"」にて「/student/{id}」を指定しているため、変更することでアクセスできなくなる。
+2.@PathVariable Long id の指定を削除することで、「/student/{id}"」のidに値が入らなくなり、アクセスできなくなる。
+3.@GetMapping("/students/{id}")の{id}を{hoge}に変更することで、idの値が入らなくなり、アクセスできなくなる。
+
+
+-------------------------------------------------------------------------------
+＜解説＞
+結果としては、1, 2, 3全てで動作しなくなる。下記は実際にやってみた結果。
+1.の場合、404エラー（原因：該当するページがない）
+    There was an unexpected error (type=Not Found, status=404).
+2.の場合、500エラー（内部サーバーエラー　原因：パスの中にあるIDを受け取れない）
+    There was an unexpected error (type=Internal Server Error, status=500).
+3.の場合、500エラー（内部サーバーエラー　原因：パスの定義がメソッドパラメーターで宣言されたパス変数名と一致しない）
+    There was an unexpected error (type=Internal Server Error, status=500).
+    [org.springframework.web.bind.MissingPathVariableException:
+    Required URI template variable 'studentId' for method parameter type Integer is not present]
+
+【解説観点】
+・@GetMapping("/students/{id}") で定義されたパス変数 {id} は、引数の @PathVariable Long id
+　と一致していなければなりません。
+・パスの記述とメソッド引数が一致しない、または一方が欠けていると、Spring Boot は正しく
+　マッピングできず、500/404エラーなどが発生します。
+・つまり、少しでも記述を間違えるとエラーになるということなので、注意しましょう。
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+■課題２
+以下のControllerメソッドで、更新処理を行ったあとに、
+return "redirect:/studentList";を返しています。
+この記述の役割を説明し、もし、"studentList"をreturnだけした場合とどう違うのか
+を説明しましょう。
+@PostMapping("/students/update")
+public String updateStudent(@ModelAttribute Student student){
+    studentService.updateStudent(student);
+    return "redirect:/studentList";
+}
+-------------------------------------------------------------------------------
+＜回答＞
+●"redirect:/studentList"
+Spring は redirect: プレフィックスを特別扱いし、「サーバー内部でビューを返す」のではなく HTTPリダイレクトをブラウザに返す。
+ブラウザは 302 Found を受け取り、その後 新しく /studentList に GETリクエストを送り直す。
+更新処理 (POST /students/update) のあとに再度ページを読み込んでも、同じ POST が繰り返されない（リロードで「更新処理がもう一度実行される」事故を防げる）。
+URLも /studentList になり、ユーザーにとって自然。これを PRGパターン（Post/Redirect/Get パターン） と呼ぶ。
+
+●"studentList"
+Spring は "studentList" を「ビュー名」として解釈し、同じリクエスト（POSTリクエスト）の中で、そのまま studentList.html などのテンプレートをレンダリング。
+この場合、URLは /students/update のまま。
+ブラウザでリロードすると、もう一度 POST /students/update が送信され、更新処理が二重に実行されてしまう危険がある。
+URL と実際に表示しているページ内容が一致しない（/students/update なのにリスト画面が表示される）。
+
+●まとめ
+redirect:/studentList
+→ POST のあとに GET へリダイレクト（PRGパターン）。二重送信防止＆URLが自然。
+studentList
+→ そのままビューを返す。URLが /students/update のまま＆リロードで二重送信のリスクあり。
+
+-------------------------------------------------------------------------------
+＜解説＞
+・"redirect:/studentList" はリダイレクト（自動転送）処理を意味し、/studentList
+　に対して新しいGETリクエストを送る。
+・redirect: を付与していないと、POST実行後、ブラウザのリロードによって再度POSTリク
+　エストが送信されてしまう。
+・redirect: を付与することで、PRGパターンとして強制リダイレクトを行いPOSTの再送信を防ぐ。
+
+※ PRGパターン
+ブラウザでのリロードによって、POSTリクエストが再送信される問題を解決するためのデザイン
+パターン。Post - Redirect - Getの頭文字をとった略称。
+
+＜リダイレクトしなかった場合の問題について、受講生登録における分かりやすい例をIntelliJで確認する＞
+・StudentController.registerStudentメソッドの戻り値をあえて下記のように修正してテストする。
+    "redirect:/studentList" → "registerStudent"
+・SpringBootを起動し、受講生登録画面で情報を入力し、登録ボタンを押す。
+・画面遷移先は受講生登録画面。ここでブラウザの再読み込みボタンを押す。
+・すると、POSTメソッドが再度実行され、先程登録したのと同じ受講生情報が登録されてしまう。
+・一覧画面で同じ受講生情報が２つ登録されているのを確認できる。
+・このような事を防ぐために、POSTメソッドの時はリダイレクトを行っている。
+
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+■課題３
+SQLのUPDATE文について、以下の２つの問題について回答しましょう。
+1.次のSQL文には誤りがあります。誤っている部分を指摘し、正しい文を書きましょう。
+    UPDATE students SET (name = #{name}, age = #{age}) WHERE id = #{id};
+2.UPDATE文実行時にWHEREを指定しないとどうなるかを考えましょう。実際に実行しても
+　構いませんが、その場合はテスト実行用のテーブルとデータを作成し、UPDATE文を実行
+　してみましょう。
+-------------------------------------------------------------------------------
+＜回答＞
+1.()を削除
+UPDATE students SET name = #{name}, age = #{age} WHERE id = #{id};
+
+2.WHEREを指定しない場合全てのデータの各項目が変更されてしまう。
+
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+＜解説＞
+1.
+UPDATE students SET name = #{name}, age = #{age} WHERE id = #{id};
+
+INSERTと違ってSET句にかっこ () は不要。
+
+2.
+SET句に指定したカラムと値が、テーブルの全レコードに適用され更新されてしまう。
+UPDATE文にはこのような危険性があるので、必ずWHERE文を指定する。
+
+-------------------------------------------------------------------------------
+
